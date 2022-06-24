@@ -88,13 +88,13 @@ def menu_scene():
     # import image for the CircuitPython
     image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
-    # adds the text objects
+    # adds the text objects for the menu scene
     text = []
     text1 = stage.Text(
         width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
     )
     text1.move(20, 10)
-    text1.text("MT Game Studios")
+    text1.text("Space Aliens")
     text.append(text1)
 
     text2 = stage.Text(
@@ -103,6 +103,13 @@ def menu_scene():
     text2.move(40, 110)
     text2.text("PRESS START")
     text.append(text2)
+
+    text3 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text3.move(40, 50)
+    text3.text("Press SELECT\n to activate\n the info page")
+    text.append(text3)
 
     # set background image to 0 & the size
     # 10 x 8 tiles of the size 16x16
@@ -130,6 +137,8 @@ def menu_scene():
         # input & does the following
         if keys & ugame.K_START != 0:
             game_scene()
+        if keys & ugame.K_SELECT != 0:
+            instructions_scene()
 
         # redraws the sprite
         game.tick()
@@ -140,7 +149,7 @@ def instructions_scene():
     # image banks for CircuitPython
     image_bank_color_background = stage.Bank.from_bmp16("PyBadge_bank_color_template.bmp")
 
-    # add text objects
+    # add text objects for the info page
     text = []
     text1 = stage.Text(width=29, height=12, font=None, palette=constants.BLUE_PALETTE, buffer=None)
     text1.move(34,10)
@@ -149,7 +158,7 @@ def instructions_scene():
 
     text2 = stage.Text(width=29, height=12, font=None, palette=constants.BLUE_PALETTE, buffer=None)
     text2.move(2, 20)
-    text2.text("This game\nis to shoot all\nthe aliens\nIf you get\ntouches by an alien\nthen you lose!")
+    text2.text("The goal\nis to shoot all\nthe evil aliens!!!\nIf you get\ntouched by an alien\nthen you lose!")
     text.append(text2)
 
     text3 = stage.Text(width=29, height=12, font=None, palette=constants.BLUE_PALETTE, buffer=None)
@@ -158,7 +167,7 @@ def instructions_scene():
     text.append(text3)
     
 
-    # set the backgorund image to 0 in the image bank
+    # set the background image to 0 in the image bank
     # and the size (10x8 tiles of size 16x16)
     background = stage.Grid(image_bank_color_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y)
 
@@ -414,6 +423,7 @@ def game_scene():
                     # alien hits the ship
                     sound.stop()
                     sound.play(crash_sound)
+                    time.sleep(0.7)
                     game_over_scene(score)
 
         # redraw sprite list
@@ -436,7 +446,7 @@ def game_over_scene(final_score):
         image_bank_2, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
 
-    # add text objects
+    # add text objects for the game over scene
     text = []
     text1 = stage.Text(
         width=29, height=14, font=None, palette=constants.RED_PALETTE, buffer=None
@@ -455,8 +465,8 @@ def game_over_scene(final_score):
     text3 = stage.Text(
         width=29, height=14, font=None, palette=constants.RED_PALETTE, buffer=None
     )
-    text3.move(32, 110)
-    text3.text("PRESS SELECT TO PLAY AGAIN")
+    text3.move(32, 99)
+    text3.text("PRESS SELECT\n to play again ")
     text.append(text3)
 
     # create a stage for the background to show up on
